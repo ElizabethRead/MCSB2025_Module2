@@ -1,0 +1,70 @@
+\documentclass{exam}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{graphicx}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+%\include{preamble}
+
+%\renewcommand{\thesection}{{Part \arabic{section}}}
+
+% Header and footer
+\pagestyle{headandfoot}
+\header{UCI MCSB Bootcamp Dry (Mathematical/Computational)}{}{}
+\headrule
+%\footer{\it{jun.allard@uci.edu}}{}{Page \thepage\ of \numpages}
+\footrule
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Project: Discrete Repressilator}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+(Reference: ``A synthetic oscillatory network of transcriptional regulators", Elowitz and Leibler, \textit{Nature} 2000.\footnote{ Note that the original work uses a continuous-time model.} ) Suppose there is a gene called $Y$. The concentration of its product is denoted $y$, in units of proteins per cell, where $y$ is measured in thousands. Suppose there are $y(i)$ proteins at minute $i$, and suppose that proteins are produced at a constant rate $\alpha_0$ and degraded at a rate $d$. Then $y$ obeys
+
+\begin{equation}
+y(i+1) = \alpha_0 - dy(i).
+\end{equation} 
+Now suppose that gene $Y$ is repressed by the product of another gene $X$. Then $y$ obeys
+\begin{equation}
+y(i+1) = \frac{\alpha}{1 + x(i-\tau)^n} + \alpha_0 - dy(i)
+\end{equation} 
+where $\alpha$ can be thought of as the repression strength, $n$ is a coefficient\footnote{ often called a \textit{Hill coefficient}} that controls the nonlinearity of $X$'s effect on $Y$, and $\tau$ is a non-negative integer that introduces a time-delay. That is, the behavior of $y$ at timepoint $i+1$ is sensitive to the concentration of $x$ at some past timepoint, $i-\tau$. (This is a simplified way to account for the time required before $Y$ ``feels" the effect of $X$, due to processes such as transcription, translation, and gene regulatory processes). 
+
+Suppose $\alpha_0=1$ and $d=0.1$. First consider only Model (1):
+\begin{enumerate}[a.]
+\item According to your intuition, what concentrations are \textit{steady states}, meaning that if the concentration $y$ had that value at time $i=0$, then it would remain at that value?
+\item Sketch your intuition for the population $y(t)$ from a starting population $y(0)=0.2$. 
+\end{enumerate}
+Now consider Model (2), and suppose $\alpha$=2 and $n=4$ and $\tau=3$:
+\begin{enumerate}[a.]
+\setcounter{enumi}{2}
+\item Suppose (for the time being) that $x$ is present at a constant concentration of 2. According to your intuition, what concentrations of $y$ are steady states?
+\item If $x$ is not present ($x=0$), according to your intuition, what concentrations of $y$ are steady states?
+\end{enumerate}
+Now consider the ``repressilator" circuit. In this circuit, three genes $X$, $Y$, and $Z$ are ``wired" in a repressive cycle (each gene is repressed by the one upstream). Develop the equations to describe the concentrations of $x$, $y$, and $z$ over time. Write code to solve the dynamical system, and answer the following questions:
+\begin{enumerate}[a.]
+\setcounter{enumi}{4}
+\item Generate time series of the populations for a few starting populations~$x(0), y(0), z(0)$. Does it match your intuition?
+\begin{itemize}
+\item Hint: How to code it to deal with the time delay, especially at the beginning of the simulation?
+\end{itemize}
+\item Can you find a set of parameters and initial conditions that shows a damped oscillation?
+\item Can you find a set of parameters and initial conditions that shows a persistent oscillation?
+\item Can you find a set of parameters and initial conditions that shows no oscillation?
+\item Can you find a set of parameters and initial conditions that shows the species oscillating in phase? Or, out of phase? Or any other types of behavior?
+\item Choose one of the following parameters: $\alpha$, $\tau$, $n$. For your chosen parameter, investigate the behavior of the system for a range of parameter values. State in words the effect your parameter has on the system's oscillations. (Bonus challenge: Is there a neat and tidy way to graph your parameter's effect?)
+\end{enumerate}
+
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
